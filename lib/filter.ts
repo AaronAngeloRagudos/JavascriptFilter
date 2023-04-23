@@ -14,7 +14,8 @@ interface sortingStatus {
 
 interface error {
     status: boolean,
-    message: string
+    message: undefined | string,
+    type: undefined | string
 }
 
 export default class Filter {
@@ -32,6 +33,10 @@ export default class Filter {
         })
 
         if (isError.status) {
+            if (isError.type === 'TypeError') {
+                throw new TypeError(isError.message);
+            }
+
             throw new Error(isError.message);
         }
 

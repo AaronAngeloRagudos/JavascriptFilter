@@ -10,6 +10,9 @@ var Filter = /** @class */ (function () {
                 matchTo: matchTo
             });
             if (isError.status) {
+                if (isError.type === 'TypeError') {
+                    throw new TypeError(isError.message);
+                }
                 throw new Error(isError.message);
             }
             var isSorted = sorting({

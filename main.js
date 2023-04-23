@@ -1,6 +1,6 @@
 import { filter } from "./dist/filter.js";
 
-const rawData = [
+let rawData = [
     {
         greeting: 'hello',
         type: ['hello','greeting', 'respects']
@@ -12,16 +12,16 @@ const rawData = [
     {
         greeting: 'thank you',
         type: ['gratitude', 'appreciation']
-    },
+    }, 
 ];
 
-const dataToBeMatched = [];
+let dataToBeMatched = [];
 
 rawData.forEach((data) => {
     dataToBeMatched.push(data.type);
 });
 
-const matchTo = ['greeting'];
+let matchTo = ['greeting'];
 
 const toConsole = filter.sortData({ rawData, dataToBeMatched, matchTo });
 
