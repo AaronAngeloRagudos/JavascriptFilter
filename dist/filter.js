@@ -1,6 +1,6 @@
 import sorting from "../dist/sorting.js";
 import handleError from "../dist/handleError.js";
-var Filter = /** @class */ (function () {
+var Filter = (function () {
     function Filter() {
         this.sortData = function (_a) {
             var rawData = _a.rawData, dataToBeMatched = _a.dataToBeMatched, matchTo = _a.matchTo;
@@ -20,7 +20,6 @@ var Filter = /** @class */ (function () {
                 dataToBeMatched: dataToBeMatched,
                 matchTo: matchTo
             });
-            //if the sorting function returns a status of false, then that means that something went wrong.
             if (!isSorted.status) {
                 throw new Error('Something went wrong in sorting the data provided. Please submit an issue in the github repository.');
             }

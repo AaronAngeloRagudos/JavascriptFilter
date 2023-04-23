@@ -32,6 +32,9 @@ export default class Filter {
             matchTo
         })
 
+        // check if there's an error,
+        // if there's none, ignore the statements below this if
+        // if statement
         if (isError.status) {
             if (isError.type === 'TypeError') {
                 throw new TypeError(isError.message);
@@ -46,7 +49,7 @@ export default class Filter {
             matchTo
         });
 
-        //if the sorting function returns a status of false, then that means that something went wrong.
+        // if the sorting function returns a status of false, then that means that something went wrong.
         if (!isSorted.status) {
             throw new Error('Something went wrong in sorting the data provided. Please submit an issue in the github repository.')
         }

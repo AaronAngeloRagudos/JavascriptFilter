@@ -20,15 +20,10 @@ export default function handleError(_a) {
         status = true;
         message = 'There is no preference/s specified. Please make sure to specify what preferences are desired for the filter to work.';
     }
-    // if there is one value inside the preferences but its length is zero or an empty string,
-    // then send an error
     if (matchTo.length === 1 && matchTo[0].length === 0) {
         status = true;
         message = 'The preference provided is an empty string, so this process will return an empty array[]. Are you sure you want to use this filter?';
     }
-    // Now, if the preferences[] has at least one value,
-    // loop through it. Then, if it has at least one value that is
-    // not a type of string, return this error. 
     if (matchTo.length >= 1) {
         for (i = 0; i < matchTo.length; i++) {
             if (typeof matchTo[i] !== 'string') {
@@ -42,10 +37,7 @@ export default function handleError(_a) {
     }
     if (dataToBeMatched.length >= 1) {
         for (j = 0; j < dataToBeMatched.length; j++) {
-            // if the data for comparison is an object (either an  object{} or an array[]),
-            // then have this, else, return an error
             if (typeof dataToBeMatched[j] === 'object') {
-                // if the object is not an array[], then return this error.
                 if (dataToBeMatched[j].constructor !== Array) {
                     return {
                         status: true,
@@ -61,11 +53,7 @@ export default function handleError(_a) {
                     type: 'TypeError'
                 };
             }
-            // Now, if the data for comparison is an array[],
-            // loop through them since its format is array[][].
             for (k = 0; k < dataToBeMatched[j].length; k++) {
-                // if the array[] of the array[] has at least one value that is not
-                // a type of string, then return this error.
                 if (typeof dataToBeMatched[j][k] !== 'string') {
                     return {
                         status: true,

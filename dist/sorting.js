@@ -11,9 +11,6 @@ export default function sorting(_a) {
                 currentPreference: currentPreference
             });
             if (!isToBeRemoved) {
-                // if the result from the function identifyThoseThatDoNotMatch() returns false,
-                // then that means the rawData[i] consists of at least one characteristic or trait
-                // that matches with matchTo, specified by the user, so we push that onto the sorted data.
                 sortedData.push(rawData[i]);
             }
         }
