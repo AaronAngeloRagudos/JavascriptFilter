@@ -12,6 +12,7 @@ export default function sorting(_a) {
             });
             if (!isToBeRemoved) {
                 sortedData.push(rawData[i]);
+                break;
             }
         }
     }

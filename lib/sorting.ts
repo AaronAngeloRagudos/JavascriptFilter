@@ -46,6 +46,9 @@ export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) 
                 // since the data for comparison is taken from the rawData[],
                 // then push that rawData[] into the sortedData[].
                 sortedData.push(rawData[i]);
+                // we break this for loop since we are only looking for a match
+                // of at least once.
+                break;
             }
         }
     };
@@ -64,6 +67,8 @@ export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) 
 }
 
 function identifyThoseThatDoNotMatch({ characteristics, currentPreference }: filterNecessities) {
+    // loop through each characteristic,
+    // if it matches with the current preference
     for (k = 0; k < characteristics.length; k++) {
         const characteristic = characteristics[k].toUpperCase();
         if (characteristic === currentPreference) {
