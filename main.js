@@ -12,7 +12,7 @@ let rawData = [
     {
         greeting: 'thank you',
         type: ['gratitude', 'appreciation']
-    }, 
+    },
 ];
 
 let dataToBeMatched = [];
