@@ -1,0 +1,1 @@
+{"version":3,"file":"handleError.js","sourceRoot":"","sources":["../lib/handleError.ts"],"names":[],"mappings":"AAMA,MAAM,CAAC,OAAO,UAAU,WAAW,CAAC,EAI1B;QAHN,OAAO,aAAA,EACP,eAAe,qBAAA,EACf,OAAO,aAAA;IAGP,OAAO;QACH,MAAM,EAAE,KAAK;QACb,OAAO,EAAE,EAAE;KACd,CAAA;AACL,CAAC;AAAA,CAAC"}

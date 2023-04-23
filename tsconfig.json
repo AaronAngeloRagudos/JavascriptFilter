@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "rootDir": "./lib",
+        "outDir": "./dist",
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "noEmitOnError": true,
+        "module": "ES6"
+    }
+}
