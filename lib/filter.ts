@@ -1,5 +1,6 @@
 import sorting from "../dist/sorting.js";
 import handleError from "../dist/handleError.js";
+import percentage from "../dist/percentage.js";
 
 interface dataSet {
     rawData: object[],
@@ -21,12 +22,12 @@ interface error {
 export default class Filter {
     constructor() { }
 
-    sortData = ({
+    sortData = async ({
         rawData,
         dataToBeMatched,
         matchTo
     }: dataSet) => {
-        const isError: error = handleError({
+        const isError: error = await handleError({
             rawData,
             dataToBeMatched,
             matchTo
@@ -43,7 +44,7 @@ export default class Filter {
             throw new Error(isError.message);
         }
 
-        const isSorted: sortingStatus = sorting({
+        const isSorted: sortingStatus = await sorting({
             rawData,
             dataToBeMatched,
             matchTo
@@ -63,6 +64,20 @@ export default class Filter {
         dataToBeMatched,
         matchTo
     }: dataSet) => {
+        // no need to add an errorhandler here since we are going to sort
+        // the data first before we get the
+        // percentages of how much the characteristics of a data
+        // matches with the references of the user.
+        const sortedData = this.sortData({
+            rawData,
+            dataToBeMatched,
+            matchTo
+        });
+
+        const dataWithPercentageOccurence = percentage({
+            data: sortedData,
+            preferences: matchTo
+        });
 
     };
 

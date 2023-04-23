@@ -23,6 +23,6 @@ rawData.forEach((data) => {
 
 let matchTo = ['greeting'];
 
-const toConsole = filter.sortData({ rawData, dataToBeMatched, matchTo });
+const toConsole = await filter.sortData({ rawData, dataToBeMatched, matchTo });
 
 console.log(toConsole)

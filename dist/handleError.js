@@ -1,9 +1,9 @@
 var i, j, k;
 export default function handleError(_a) {
     var rawData = _a.rawData, dataToBeMatched = _a.dataToBeMatched, matchTo = _a.matchTo;
-    var message;
+    var message = null;
     var status = false;
-    var type;
+    var type = null;
     if (!rawData || rawData.length === 0) {
         return {
             status: true,

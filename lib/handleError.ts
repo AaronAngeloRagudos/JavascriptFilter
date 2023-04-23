@@ -13,9 +13,9 @@ export default function handleError({
     dataToBeMatched,
     matchTo
 }: dataSet) {
-    let message: undefined | string;
+    let message: string | null | undefined = null;
     let status: boolean = false;
-    let type: string;
+    let type: string | null | undefined = null;
 
     if (!rawData || rawData.length === 0) {
         return {

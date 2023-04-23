@@ -68,7 +68,9 @@ export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) 
 
 function identifyThoseThatDoNotMatch({ characteristics, currentPreference }: filterNecessities) {
     // loop through each characteristic,
-    // if it matches with the current preference
+    // if it matches with the current preference at least once
+    // return false. Which means the characteristics[] not matching is not
+    // true.
     for (k = 0; k < characteristics.length; k++) {
         const characteristic = characteristics[k].toUpperCase();
         if (characteristic === currentPreference) {
