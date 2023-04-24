@@ -9,6 +9,11 @@ interface filterNecessities {
     currentPreference: string
 }
 
+interface isToBeRemoved {
+    status: boolean,
+    dataForComparison: string[] | null | undefined
+}
+
 let i: number,
     j: number,
     k: number,
@@ -20,8 +25,9 @@ let i: number,
     s: number,
     t: number;
 
-export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) {
+export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet, isGetPercentage: boolean) {
     const sortedData: object[] = [];
+    const sortedDataForPercentageAcquisition: string[][] = [];
 
     // loop through the data for comparison.
     for (i = 0; i < dataToBeMatched.length; i++) {
@@ -33,19 +39,27 @@ export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) 
             // now call upon the function identifyThoseThatDoNotMatch()
             // and if returns false, which means the current data for comparison
             // we are at matches with the values of the preferences at least once
-            const isToBeRemoved: boolean = identifyThoseThatDoNotMatch({
+            const isToBeRemoved: isToBeRemoved = identifyThoseThatDoNotMatch({
                 characteristics,
-                currentPreference
-            });
+                currentPreference,
+            }, isGetPercentage);
 
             // if the result from the function identifyThoseThatDoNotMatch() returns false,
             // then that means the rawData[i] consists of at least one characteristic or trait
             // that matches with matchTo, specified by the user, so we push that onto the sorted data.
-            if (!isToBeRemoved) {
+            if (!isToBeRemoved.status) {
                 // since the index of the data for comparison is the same as that of rawData[],
                 // since the data for comparison is taken from the rawData[],
                 // then push that rawData[] into the sortedData[].
                 sortedData.push(rawData[i]);
+
+                // remove the data that matched
+                // if this loop is accessed by the getPercentageOccurence function, then include these.
+                if (isGetPercentage) {
+                    sortedDataForPercentageAcquisition.push(isToBeRemoved.dataForComparison);
+                    break;
+                }
+
                 // we break this for loop since we are only looking for a match
                 // of at least once.
                 break;
@@ -55,18 +69,23 @@ export default function sorting({ rawData, dataToBeMatched, matchTo }: dataSet) 
 
     if (sortedData) {
         return {
-            status: true,
-            data: sortedData
+            sortedData: {
+                status: true,
+                dataForComparison: sortedDataForPercentageAcquisition,
+                data: sortedData,
+            }
         };
     } else {
         return {
-            status: false,
-            data: null
+            sortedData: {
+                status: false,
+                data: null
+            }
         };
     }
 }
 
-function identifyThoseThatDoNotMatch({ characteristics, currentPreference }: filterNecessities) {
+function identifyThoseThatDoNotMatch({ characteristics, currentPreference }: filterNecessities, isGetPercentage: boolean) {
     // loop through each characteristic,
     // if it matches with the current preference at least once
     // return false. Which means the characteristics[] not matching is not
@@ -74,8 +93,14 @@ function identifyThoseThatDoNotMatch({ characteristics, currentPreference }: fil
     for (k = 0; k < characteristics.length; k++) {
         const characteristic = characteristics[k].toUpperCase();
         if (characteristic === currentPreference) {
-            return false;
+            return {
+                status: false,
+                dataForComparison: characteristics
+            };
         }
     }
-    return true;
+    return {
+        status: true,
+        dataForComparison: null || undefined
+    };
 };

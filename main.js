@@ -21,8 +21,8 @@ rawData.forEach((data) => {
     dataToBeMatched.push(data.type);
 });
 
-let matchTo = ['greeting'];
+let matchTo = ['insult', 'hello', 'respects', 'greeting', 'haha', 'hehe'];
 
-const toConsole = await filter.sortData({ rawData, dataToBeMatched, matchTo });
+const toConsole = await filter.getPercentageOccurence({ rawData, dataToBeMatched, matchTo });
 
-console.log(toConsole)
+console.log(toConsole.filteredData);

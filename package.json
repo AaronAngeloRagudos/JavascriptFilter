@@ -4,7 +4,7 @@
   "description": "This is a library that takes two sets of data input which is of type array[]. The first data would be the one you would like to filter or check if any of its characteristics match with your second data.",
   "scripts": {
     "dev": "tsc --watch",
-    "test": "nodemon main"
+    "test": "nodemon main.js"
   },
   "keywords": [
     "ES6 MODULE",

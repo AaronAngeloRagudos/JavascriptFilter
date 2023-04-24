@@ -40,17 +40,17 @@ import percentage from "../dist/percentage.js";
 var Filter = (function () {
     function Filter() {
         var _this = this;
-        this.sortData = function (_a) {
+        this.sortData = function (_a, isGetPercentage) {
             var rawData = _a.rawData, dataToBeMatched = _a.dataToBeMatched, matchTo = _a.matchTo;
             return __awaiter(_this, void 0, void 0, function () {
-                var isError, isSorted, sortedData;
+                var isError, isSorted, sortedData, sortedData;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0: return [4, handleError({
                                 rawData: rawData,
                                 dataToBeMatched: dataToBeMatched,
                                 matchTo: matchTo
-                            })];
+                            }, isGetPercentage)];
                         case 1:
                             isError = _b.sent();
                             if (isError.status) {
@@ -62,29 +62,50 @@ var Filter = (function () {
                             return [4, sorting({
                                     rawData: rawData,
                                     dataToBeMatched: dataToBeMatched,
-                                    matchTo: matchTo
-                                })];
+                                    matchTo: matchTo,
+                                }, isGetPercentage)];
                         case 2:
                             isSorted = _b.sent();
-                            if (!isSorted.status) {
+                            if (!isSorted.sortedData.status) {
                                 throw new Error('Something went wrong in sorting the data provided. Please submit an issue in the github repository.');
                             }
-                            sortedData = isSorted.data;
-                            return [2, sortedData];
+                            if (isGetPercentage) {
+                                sortedData = isSorted.sortedData;
+                                return [2, sortedData];
+                            }
+                            else {
+                                sortedData = isSorted.sortedData;
+                                return [2, sortedData.data];
+                            }
+                            return [2];
                     }
                 });
             });
         };
         this.getPercentageOccurence = function (_a) {
             var rawData = _a.rawData, dataToBeMatched = _a.dataToBeMatched, matchTo = _a.matchTo;
-            var sortedData = _this.sortData({
-                rawData: rawData,
-                dataToBeMatched: dataToBeMatched,
-                matchTo: matchTo
-            });
-            var dataWithPercentageOccurence = percentage({
-                data: sortedData,
-                preferences: matchTo
+            return __awaiter(_this, void 0, void 0, function () {
+                var sortedData, dataWithPercentageOccurence;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0: return [4, this.sortData({
+                                rawData: rawData,
+                                dataToBeMatched: dataToBeMatched,
+                                matchTo: matchTo,
+                            }, true)];
+                        case 1:
+                            sortedData = _b.sent();
+                            return [4, percentage({
+                                    data: sortedData.data,
+                                    dataForComparison: sortedData.dataForComparison,
+                                    preferences: matchTo,
+                                    indecesOfValueThatMatched: sortedData.indecesOfDataThatMatched
+                                })];
+                        case 2:
+                            dataWithPercentageOccurence = _b.sent();
+                            return [2, dataWithPercentageOccurence];
+                    }
+                });
             });
         };
     }

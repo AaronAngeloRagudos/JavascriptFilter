@@ -9,7 +9,16 @@ interface dataSet {
 }
 
 interface sortingStatus {
+    sortedData: {
+        status: boolean,
+        dataForComparison: string[][],
+        data: object[]
+    }
+}
+
+interface SortedDataInterface {
     status: boolean,
+    dataForComparison: string[][],
     data: object[]
 }
 
@@ -26,12 +35,13 @@ export default class Filter {
         rawData,
         dataToBeMatched,
         matchTo
-    }: dataSet) => {
+    }: dataSet,
+    isGetPercentage: boolean | null | undefined) => {
         const isError: error = await handleError({
             rawData,
             dataToBeMatched,
             matchTo
-        })
+        }, isGetPercentage);
 
         // check if there's an error,
         // if there's none, ignore the statements below this if
@@ -47,19 +57,24 @@ export default class Filter {
         const isSorted: sortingStatus = await sorting({
             rawData,
             dataToBeMatched,
-            matchTo
-        });
+            matchTo,
+        }, isGetPercentage);
 
         // if the sorting function returns a status of false, then that means that something went wrong.
-        if (!isSorted.status) {
+        if (!isSorted.sortedData.status) {
             throw new Error('Something went wrong in sorting the data provided. Please submit an issue in the github repository.')
         }
 
-        const sortedData: undefined | object[] = isSorted.data;
-        return sortedData;
+        if (isGetPercentage) {
+            const sortedData: any = isSorted.sortedData;
+            return sortedData;
+        } else {
+            const sortedData: SortedDataInterface = isSorted.sortedData;
+            return sortedData.data;
+        }
     };
 
-    getPercentageOccurence = ({
+    getPercentageOccurence = async ({
         rawData,
         dataToBeMatched,
         matchTo
@@ -68,17 +83,20 @@ export default class Filter {
         // the data first before we get the
         // percentages of how much the characteristics of a data
         // matches with the references of the user.
-        const sortedData = this.sortData({
+        const sortedData = await this.sortData({
             rawData,
             dataToBeMatched,
-            matchTo
+            matchTo,
+        }, true);
+
+        const dataWithPercentageOccurence = await percentage({
+            data: sortedData.data,
+            dataForComparison: sortedData.dataForComparison,
+            preferences: matchTo,
+            indecesOfValueThatMatched: sortedData.indecesOfDataThatMatched
         });
 
-        const dataWithPercentageOccurence = percentage({
-            data: sortedData,
-            preferences: matchTo
-        });
-
+        return dataWithPercentageOccurence;
     };
 
 };
