@@ -6,6 +6,10 @@
     "dev": "tsc --watch",
     "test": "nodemon main.js"
   },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "keywords": [
     "ES6 MODULE",
     "Javascript Filter",
