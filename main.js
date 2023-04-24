@@ -1,28 +1,9 @@
 import { filter } from "./dist/filter.js";
 
-let rawData = [
-    {
-        greeting: 'hello',
-        type: ['hello','greeting', 'respects']
-    },
-    {
-        greeting: 'fuck you',
-        type: ['insult', 'offense']
-    },
-    {
-        greeting: 'thank you',
-        type: ['gratitude', 'appreciation']
-    },
-];
+const sortData = filter.sortData
+const getPercentageOccurence = filter.getPercentageOccurence
 
-let dataToBeMatched = [];
-
-rawData.forEach((data) => {
-    dataToBeMatched.push(data.type);
-});
-
-let matchTo = ['insult', 'hello', 'respects', 'greeting', 'haha', 'hehe'];
-
-const toConsole = await filter.getPercentageOccurence({ rawData, dataToBeMatched, matchTo });
-
-console.log(toConsole.filteredData);
+export {
+    sortData,
+    getPercentageOccurence
+}
